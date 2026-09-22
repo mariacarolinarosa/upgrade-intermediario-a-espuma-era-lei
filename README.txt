@@ -12,8 +12,14 @@ O projeto usa Bootstrap 5 via CDN e localStorage apenas para manter o carrinho e
 Nenhum PHP/SQLite é necessário para esta versão focada em interface/interatividade.
 
 Arquivos principais:
-  html/EspumaEraLei.html
+  index.html
   html/Cafeteiras.html
   html/Capsulas.html
   html/Pedidos.html
   html/DadosPagamento.html
+
+Comandos atualização:
+git status
+git add .
+git commit -m "Atualiza projeto"
+git push

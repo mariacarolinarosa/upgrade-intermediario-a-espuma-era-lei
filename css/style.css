@@ -50,8 +50,7 @@ a:hover { color: var(--accent-dark); }
   background: rgba(255, 253, 249, .88);
   backdrop-filter: blur(14px);
   border-bottom: 1px solid var(--border);
-  position: sticky;
-  top: 0;
+  position: relative;
   z-index: 1030;
 }
 
@@ -80,16 +79,16 @@ a:hover { color: var(--accent-dark); }
    HERO COM AUMENTO DE +20% (Escala Ampliada)
 ========================================= */
 .hero {
-  background: linear-gradient(135deg, #fffdf9 0%, #f3e7d8 100%);
-  position: relative;
-  overflow: hidden;
-  padding: 190px 0; /* Espaçamento vertical ampliado */
-  border-bottom: 1px solid var(--border);
+    background: linear-gradient(135deg, #fffdf9 0%, #f3e7d8 100%);
+    position: relative;
+    overflow: hidden;
+    padding: 100px 0;
+    border-bottom: 1px solid var(--border);
 }
 
 .hero::after {
   content: ''; position: absolute; width: 55vw; height: 55vw;
-  max-width: 950px; max-height: 950px; border-radius: 50%;
+  max-width: 850px; max-height: 950px; border-radius: 50%;
   background: rgba(201, 137, 74, .08); right: -10%; top: -20%; z-index: 0;
 }
 
@@ -99,7 +98,7 @@ a:hover { color: var(--accent-dark); }
 .hero p { color: var(--muted); font-size: clamp(1.35rem, 3.5vw, 2.1rem); max-width: 920px; line-height: 1.4; } /* +20% no parágrafo */
 .hero .btn-coffee, .hero .btn-outline-coffee { padding: 1.4rem 2.6rem; font-size: 1.5rem; } /* Botões maiores (+20%) */
 .hero-media { position: relative; z-index: 1; }
-.floating-img { animation: float 6s ease-in-out infinite; max-width: 100%; height: auto; max-height: 480px; filter: drop-shadow(0 25px 30px rgba(49, 28, 18, .14)); }
+.floating-img {max-width: 100%; height: auto; max-height: 480px; filter: drop-shadow(0 25px 30px rgba(49, 28, 18, .14)); }
 
 @keyframes float {
   0% { transform: translateY(0px); }
@@ -214,4 +213,22 @@ a:hover { color: var(--accent-dark); }
   .hero .d-flex { justify-content: center; }
   .floating-img { margin-top: 50px; max-height: 350px; }
   .panel, .detail-panel { padding: 20px; }
+}
+
+.img-organica {
+    width: 900px;
+    height: 900px;
+    max-width: 100%;
+
+    /* A imagem preenche completamente a forma */
+    object-fit: cover;
+
+    /* Forma orgânica */
+    border-radius: 58% 42% 63% 37% / 45% 58% 42% 55%;
+
+    /* Corta a imagem dentro da forma */
+    overflow: hidden;
+
+    /* Sombra */
+    box-shadow: 0 20px 45px rgba(49, 28, 18, 0.15);
 }
