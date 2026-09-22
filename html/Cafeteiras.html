@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Cafeteiras | A Espuma Era Lei</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="../css/style.css" rel="stylesheet">
+</head>
+<body>
+  <div class="site-shell">
+    
+    <div class="topbar">
+      <nav class="navbar navbar-expand-lg">
+        <div class="container-fluid px-4 px-xl-5">
+          <a class="navbar-brand d-flex align-items-center gap-2" href="../index.html">
+            <img src="../Imagens/EspumaEraLeiTopo.png" alt="A Espuma Era Lei" style="height:52px">
+          </a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menuPrincipal">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="menuPrincipal">
+            <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-1">
+              <li class="nav-item"><a class="nav-link" href="../index.html">Apresentação</a></li>
+              <li class="nav-item"><a class="nav-link active" href="Cafeteiras.html">Cafeteiras</a></li>
+              <li class="nav-item"><a class="nav-link" href="Capsulas.html">Cápsulas</a></li>
+              <li class="nav-item"><a class="nav-link" href="Pedidos.html">Pedidos</a></li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+    </div>
+
+    <main class="flex-grow-1">
+      <section class="pt-5 pb-4 fade-in-scroll">
+        <div class="container-fluid px-4 px-xl-5">
+          <div class="section-heading">
+            <div class="eyebrow">Escolha sua máquina</div>
+            <h1 style="font-size: clamp(3rem, 6vw, 4.5rem); font-weight: 700; color: var(--coffee-950); line-height: 1;">Cafeteiras</h1>
+            <p class="fs-5 text-secondary mt-3 max-w-700">Veja os modelos disponíveis, selecione a quantidade e adicione ao seu pedido.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="pb-5">
+        <div class="container-fluid px-4 px-xl-5 fade-in-scroll">
+          <div class="row g-4" id="maquinasGrid"></div>
+        </div>
+      </section>
+
+      <!-- Modal Unificado de Cafeteiras -->
+      <div class="modal fade" id="produtoModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h2 class="modal-title h5" id="modalTitulo">Produto</h2>
+              <button class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+            </div>
+            <div class="modal-body text-center">
+              <img id="modalImagem" class="modal-product-img" alt="">
+              <span id="modalMarca" class="badge badge-soft rounded-pill mb-2"></span>
+              <p id="modalPreco" class="price mb-3"></p>
+              
+              <!-- Seletor de Quantidade -->
+              <div class="mb-3 d-flex justify-content-center align-items-center gap-3">
+                <label for="modalQtd" class="form-label mb-0 fw-bold">Quantidade:</label>
+                <input type="number" id="modalQtd" class="form-control text-center" style="width: 80px;" min="1" max="5" value="1" oninput="atualizarSubtotalMaquinaModal()">
+              </div>
+              <div class="text-secondary mb-3 small">
+                Subtotal: <strong id="modalSubtotal" class="text-coffee-950 fs-6">R$ 0,00</strong>
+              </div>
+            </div>
+            <div class="modal-footer flex-column flex-sm-row gap-2">
+              <button type="button" class="btn btn-outline-coffee w-100 w-sm-auto" data-bs-dismiss="modal" onclick="adicionarMaquinaEContinuar()">Adicionar ao carrinho e continuar comprando</button>
+              <button type="button" class="btn btn-coffee w-100 w-sm-auto" onclick="adicionarMaquinaEIrParaFechamento()">Ir para fechamento</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Rodapé -->
+    <footer class="site-footer mt-auto pt-5 pb-3 fade-in-scroll">
+      <div class="container-fluid px-4 px-xl-5">
+        <div class="row gy-4 mb-5">
+          <div class="col-lg-4 col-md-6 pe-lg-4">
+            <div class="d-flex align-items-center gap-2 mb-3">
+               <span class="fs-3">☕</span>
+               <h5 class="text-white mb-0 fw-bold font-ubuntu">A Espuma Era Lei</h5>
+            </div>
+            <p class="text-white-50">Nascemos da paixão por extrair o melhor de cada grão. Transformamos a sua pausa para o café num verdadeiro ritual de sabor e conforto, entregando as melhores máquinas e cápsulas na sua porta.</p>
+          </div>
+          <div class="col-lg-2 col-md-6">
+            <h5 class="text-white mb-4 font-ubuntu">Navegue</h5>
+            <ul class="list-unstyled footer-links">
+              <li><a href="../index.html">Início</a></li>
+              <li><a href="Cafeteiras.html">Cafeteiras</a></li>
+              <li><a href="Capsulas.html">Cápsulas</a></li>
+              <li><a href="Pedidos.html">Meus Pedidos</a></li>
+            </ul>
+          </div>
+          <div class="col-lg-3 col-md-6">
+            <h5 class="text-white mb-4 font-ubuntu">Fale Conosco</h5>
+            <ul class="list-unstyled text-white-50 contact-list">
+              <li class="mb-3 d-flex align-items-start gap-2"><span>📍</span> <span>Rua do Café, 123 - Centro<br>Rio de Janeiro, RJ</span></li>
+              <li class="mb-3 d-flex align-items-center gap-2"><span>📞</span> <span>(21) 91122-3344</span></li>
+              <li class="d-flex align-items-center gap-2"><span>✉️</span> <span>contato@espumaeralei.com.br</span></li>
+            </ul>
+          </div>
+          <div class="col-lg-3 col-md-6">
+            <h5 class="text-white mb-4 font-ubuntu">Atendimento</h5>
+            <p class="text-white-50 mb-4">Seg a Sex: 08h às 18h<br>Sábados: 09h às 13h</p>
+            <div class="d-flex gap-3 social-badges">
+              <a href="#">📸</a><a href="#">👍</a><a href="#">💬</a>
+            </div>
+          </div>
+        </div>
+        <div class="border-top border-secondary pt-4 text-center d-flex flex-column flex-md-row justify-content-between align-items-center">
+          <small class="text-white-50 mb-2 mb-md-0">&copy; 2026 A Espuma Era Lei.</small>
+          <small class="text-white-50">Desenvolvido com dedicação e muito café.</small>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="../js/common.js"></script>
+  <script>
+    const maquinas = [
+      { id: 'mini-me', nome: 'Mini ME', marca: 'Dolce Gusto', imagem: 'DolceGustoMiniME.jpg', preco: 480 },
+      { id: 'genio-s-plus', nome: 'Gênio S Plus', marca: 'Dolce Gusto', imagem: 'DolceGustoGenioSPlus.jpg', preco: 530 },
+      { id: 'inissia', nome: 'Inissia', marca: 'Nespresso', imagem: 'NespressoInissia.jpg', preco: 500 },
+      { id: 'lov', nome: 'LOV', marca: 'Três Corações', imagem: 'TresCoracoesLOV.jpg', preco: 400 }
+    ];
+
+    let maquinaAtualIndex = null;
+    const grid = document.getElementById('maquinasGrid');
+    
+    grid.innerHTML = maquinas.map((p, i) => `
+      <div class="col-md-6 col-xl-3"><article class="card-modern feature-block">
+        <div class="card-media"><img src="../Imagens/${p.imagem}" alt="${p.nome}"></div>
+        <div class="card-body-modern d-flex flex-column">
+          <span class="badge badge-soft rounded-pill align-self-start mb-2">${p.marca}</span>
+          <h2 class="h5">${p.nome}</h2>
+          <div class="mt-auto pt-3 d-flex justify-content-between align-items-center gap-2">
+            <span class="price">${moeda(p.preco)}</span>
+            <button class="btn btn-coffee btn-sm" onclick="abrirMaquina(${i})">Detalhes</button>
+          </div>
+        </div>
+      </article></div>`).join('');
+
+    const modalElement = document.getElementById('produtoModal');
+    const modal = new bootstrap.Modal(modalElement);
+
+    function abrirMaquina(i) {
+      maquinaAtualIndex = i;
+      const p = maquinas[i];
+      document.getElementById('modalTitulo').textContent = p.nome;
+      document.getElementById('modalMarca').textContent = p.marca;
+      document.getElementById('modalPreco').textContent = moeda(p.preco);
+      document.getElementById('modalQtd').value = 1;
+
+      const img = document.getElementById('modalImagem'); 
+      img.src = `../Imagens/${p.imagem}`; 
+      img.alt = p.nome;
+
+      atualizarSubtotalMaquinaModal();
+      modal.show();
+    }
+
+    function atualizarSubtotalMaquinaModal() {
+      if (maquinaAtualIndex === null) return;
+      const p = maquinas[maquinaAtualIndex];
+      const qtd = Math.max(1, Number(document.getElementById('modalQtd').value) || 1);
+      document.getElementById('modalSubtotal').textContent = moeda(p.preco * qtd);
+    }
+
+    function salvarMaquinaNoCarrinho() {
+      if (maquinaAtualIndex === null) return;
+      const p = maquinas[maquinaAtualIndex];
+      const qtd = Math.max(1, Number(document.getElementById('modalQtd').value) || 1);
+
+      addToCart({
+        id: p.id,
+        name: p.nome,
+        price: p.preco,
+        typeLabel: `Cafeteira · ${p.marca}`
+      }, qtd);
+    }
+
+    function adicionarMaquinaEContinuar() {
+      salvarMaquinaNoCarrinho();
+      modal.hide();
+    }
+
+    function adicionarMaquinaEIrParaFechamento() {
+      salvarMaquinaNoCarrinho();
+      window.location.href = 'DadosPagamento.html';
+    }
+
+    // Animação Scroll
+    document.addEventListener("DOMContentLoaded", function() {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+          } else {
+            entry.target.classList.remove('is-visible');
+          }
+        });
+      }, { threshold: 0.1, rootMargin: "0px 0px -30px 0px" });
+      document.querySelectorAll('.fade-in-scroll').forEach(el => observer.observe(el));
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,217 @@
+@import url('https://fonts.googleapis.com/css2?family=Karla:wght@400;500;600;700&family=Ubuntu:wght@400;500;600;700&display=swap');
+
+:root {
+  --coffee-950: #261610;
+  --coffee-900: #3b2117;
+  --coffee-800: #5a3424;
+  --coffee-700: #74452f;
+  --coffee-600: #956344;
+  --cream-50: #fffdf9;
+  --cream-100: #f8f3ec;
+  --cream-200: #eee5d8;
+  --accent: #c9894a;
+  --accent-dark: #a96d32;
+  --wine: #9a3f3f;
+  --text: #33231d;
+  --muted: #78685f;
+  --border: rgba(59, 33, 23, .12);
+  --shadow: 0 18px 45px rgba(49, 28, 18, .09);
+  --radius: 22px;
+}
+
+html {
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: radial-gradient(circle at top right, rgba(201, 137, 74, .12), transparent 30%), var(--cream-100);
+  color: var(--text);
+  font-family: Karla, system-ui, sans-serif;
+  font-size: 17px; /* Aumentado ligeiramente para acompanhar o zoom geral */
+  overflow-x: hidden;
+}
+
+h1, h2, h3, h4, .font-ubuntu, .navbar-brand {
+  font-family: Ubuntu, system-ui, sans-serif;
+}
+
+a { color: inherit; }
+a:hover { color: var(--accent-dark); }
+
+.site-shell { min-height: 100vh; display: flex; flex-direction: column; }
+
+/* =========================================
+   TOPO / NAVEGAÇÃO
+========================================= */
+.topbar {
+  background: rgba(255, 253, 249, .88);
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  z-index: 1030;
+}
+
+.navbar { padding: 1rem 0; }
+.navbar-brand { font-weight: 700; letter-spacing: -.03em; color: var(--coffee-950); }
+.navbar-brand img { height: 58px; width: auto; object-fit: contain; } /* Logo ligeiramente maior (+20%) */
+
+.nav-link {
+  color: var(--coffee-800) !important;
+  font-weight: 600;
+  font-size: 1.05rem;
+  border-radius: 999px;
+  padding: .6rem 1.1rem !important;
+  transition: all 0.2s;
+}
+
+.nav-link:hover, .nav-link.active {
+  background: var(--coffee-950);
+  color: #fff !important;
+}
+
+.contact-mini { color: var(--muted); font-size: .95rem; line-height: 1.35; text-align: right; }
+
+
+/* =========================================
+   HERO COM AUMENTO DE +20% (Escala Ampliada)
+========================================= */
+.hero {
+  background: linear-gradient(135deg, #fffdf9 0%, #f3e7d8 100%);
+  position: relative;
+  overflow: hidden;
+  padding: 190px 0; /* Espaçamento vertical ampliado */
+  border-bottom: 1px solid var(--border);
+}
+
+.hero::after {
+  content: ''; position: absolute; width: 55vw; height: 55vw;
+  max-width: 950px; max-height: 950px; border-radius: 50%;
+  background: rgba(201, 137, 74, .08); right: -10%; top: -20%; z-index: 0;
+}
+
+.hero-content { position: relative; z-index: 1; }
+.hero-kicker { text-transform: uppercase; letter-spacing: .16em; font-size: clamp(1rem, 2.2vw, 1.45rem); font-weight: 700; color: var(--accent-dark); }
+.hero h1 { font-size: clamp(4rem, 9.5vw, 7.8rem); line-height: 0.95; font-weight: 700; color: var(--coffee-950); } /* +20% no título principal */
+.hero p { color: var(--muted); font-size: clamp(1.35rem, 3.5vw, 2.1rem); max-width: 920px; line-height: 1.4; } /* +20% no parágrafo */
+.hero .btn-coffee, .hero .btn-outline-coffee { padding: 1.4rem 2.6rem; font-size: 1.5rem; } /* Botões maiores (+20%) */
+.hero-media { position: relative; z-index: 1; }
+.floating-img { animation: float 6s ease-in-out infinite; max-width: 100%; height: auto; max-height: 480px; filter: drop-shadow(0 25px 30px rgba(49, 28, 18, .14)); }
+
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-18px); }
+  100% { transform: translateY(0px); }
+}
+
+.section-heading .eyebrow { color: var(--accent-dark); font-weight: 700; text-transform: uppercase; letter-spacing: .14em; font-size: .85rem; }
+.text-coffee-950 { color: var(--coffee-950) !important; }
+
+
+/* =========================================
+   BLOCOS INFORMATIVOS (EFEITO E HOVER)
+========================================= */
+.fade-in-scroll { 
+  opacity: 0; 
+  transform: translateY(50px); 
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out; 
+  will-change: opacity, transform; 
+}
+.fade-in-scroll.is-visible { 
+  opacity: 1; 
+  transform: translateY(0); 
+}
+
+.feature-block { transition: transform 0.3s ease, background 0.3s ease; border-radius: 0; padding: 30px 20px; }
+.feature-block:hover { transform: scale(1.02); background: rgba(255, 253, 249, 0.6); box-shadow: 0 20px 40px rgba(49, 28, 18, 0.04); }
+
+.feature-icon-wrapper { background: #f1e7db; width: 160px; height: 160px; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 15px 35px rgba(49, 28, 18, 0.08); position: relative; transition: transform 0.4s ease; }
+.feature-block:hover .feature-icon-wrapper { transform: translateY(-10px); }
+.feature-icon-wrapper::after { content: ''; position: absolute; inset: -14px; border: 2px dashed rgba(201, 137, 74, 0.4); border-radius: 50%; animation: spin 25s linear infinite; }
+
+@keyframes spin { 100% { transform: rotate(360deg); } }
+
+
+/* =========================================
+   CLASSES ESTRUTURAIS DAS PÁGINAS INTERNAS
+========================================= */
+.card-modern { height: 100%; background: rgba(255, 253, 249, .92); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: 0 10px 30px rgba(49, 28, 18, .06); overflow: hidden; transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease; }
+.card-modern:hover { transform: translateY(-5px); box-shadow: 0 18px 38px rgba(49, 28, 18, .11); border-color: rgba(201, 137, 74, .35); }
+.card-media { min-height: 250px; background: #f1e7db; display: flex; align-items: center; justify-content: center; padding: 22px; }
+.card-media img { max-height: 230px; max-width: 90%; object-fit: contain; }
+.card-body-modern { padding: 26px; }
+
+.badge-soft { background: #f1e2d2; color: var(--coffee-800); font-weight: 700; font-size: 0.9rem; }
+.price { color: var(--wine); font-size: 1.45rem; font-weight: 700; }
+
+.detail-panel { position: sticky; top: 100px; background: #fffdf9; border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow); padding: 32px; }
+.detail-panel img { display: block; margin: 0 auto; width: min(240px, 90%); height: 240px; object-fit: contain; }
+.detail-empty { min-height: 240px; display: grid; place-items: center; color: var(--muted); text-align: center; background: #f4ebdf; border-radius: 18px; font-size: 1.1rem; }
+
+.order-layout { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(300px, .85fr); gap: 28px; }
+.panel { background: #fffdf9; border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow); padding: 30px; }
+.panel h2 { font-size: 1.4rem; margin-bottom: 20px; }
+
+.form-label { font-weight: 700; color: var(--coffee-800); }
+.form-control, .form-select { border-radius: 14px; border: 1px solid rgba(59, 33, 23, .16); padding: .85rem 1rem; font-size: 1.05rem; }
+.form-control:focus, .form-select:focus { border-color: var(--accent); box-shadow: 0 0 0 .2rem rgba(201, 137, 74, .13); }
+
+.cart-list { display: flex; flex-direction: column; gap: 14px; min-height: 180px; }
+.cart-item { display: flex; gap: 14px; align-items: center; justify-content: space-between; background: #f8f1e8; border-radius: 16px; padding: 14px 16px; }
+.cart-item small { color: var(--muted); font-size: 0.9rem; }
+.cart-item strong { color: var(--coffee-900); }
+.cart-empty { display: grid; place-items: center; min-height: 180px; color: var(--muted); text-align: center; border: 1px dashed rgba(59, 33, 23, .18); border-radius: 16px; }
+
+.total-box { border-top: 1px solid var(--border); margin-top: 22px; padding-top: 22px; display: flex; justify-content: space-between; align-items: center; font-size: 1.15rem; }
+.total-box strong { color: var(--coffee-950); font-size: 1.55rem; }
+.summary-box { background: #f8f1e8; border-radius: 18px; padding: 20px; }
+
+.payment-grid { display: grid; grid-template-columns: minmax(0, 1fr) 380px; gap: 28px; }
+
+
+/* =========================================
+   BOTÕES
+========================================= */
+.btn-coffee { background: var(--coffee-950); color: white; border: none; border-radius: 999px; padding: .85rem 1.4rem; font-weight: 700; font-size: 1.05rem; box-shadow: 0 8px 18px rgba(38, 22, 16, .12); transition: all 0.2s; }
+.btn-coffee:hover { background: #1c100c; color: #fff; transform: translateY(-2px); box-shadow: 0 12px 22px rgba(38, 22, 16, .18); }
+.btn-outline-coffee { border: 1px solid rgba(59, 33, 23, .25); color: var(--coffee-900); border-radius: 999px; font-weight: 700; font-size: 1.05rem; display: inline-flex; align-items: center; justify-content: center; padding: .85rem 1.4rem; transition: all 0.2s; }
+.btn-outline-coffee:hover { background: var(--coffee-900); color: #fff; border-color: var(--coffee-900); }
+.btn-accent { background: var(--accent); color: #fff; border: none; border-radius: 999px; font-weight: 700; font-size: 1.05rem; padding: .85rem 1.4rem; }
+.btn-accent:hover { background: var(--accent-dark); color: #fff; }
+
+
+/* =========================================
+   RODAPÉ
+========================================= */
+.site-footer { background: var(--coffee-950); color: #eadfd5; font-size: 1.05rem; }
+.footer-links a { color: rgba(255, 255, 255, 0.6); text-decoration: none; transition: color 0.2s, padding-left 0.2s; display: inline-block; margin-bottom: 12px; }
+.footer-links a:hover { color: var(--accent); padding-left: 6px; }
+.contact-list span:first-child { font-size: 1.2rem; }
+.social-badges a { display: flex; align-items: center; justify-content: center; width: 44px; height: 44px; background: rgba(255, 255, 255, 0.05); border-radius: 50%; text-decoration: none; font-size: 1.1rem; transition: background 0.2s, transform 0.2s; }
+.social-badges a:hover { background: var(--accent); transform: translateY(-3px); }
+.border-secondary { border-color: rgba(255, 255, 255, 0.1) !important; }
+
+
+/* =========================================
+   RESPONSIVIDADE
+========================================= */
+@media (max-width: 991.98px) {
+  .contact-mini { display: none; }
+  .order-layout, .payment-grid { grid-template-columns: 1fr; }
+  .detail-panel { position: static; }
+}
+
+@media (max-width: 767.98px) {
+  .feature-icon-wrapper { width: 130px; height: 130px; }
+}
+
+@media (max-width: 575.98px) {
+  .navbar-brand img { height: 46px; }
+  .hero { padding: 90px 0 50px; text-align: center; }
+  .hero .d-flex { justify-content: center; }
+  .floating-img { margin-top: 50px; max-height: 350px; }
+  .panel, .detail-panel { padding: 20px; }
+}

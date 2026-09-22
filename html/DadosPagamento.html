@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Pagamento | A Espuma Era Lei</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="../css/style.css" rel="stylesheet">
+  <style>
+    .payment-option {
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 16px;
+      cursor: pointer;
+      transition: .2s ease;
+      height: 100%;
+    }
+
+    .payment-option:hover {
+      border-color: var(--accent);
+      background: #fffaf4;
+    }
+
+    .payment-option.active {
+      border: 2px solid var(--accent);
+      background: #fff8ef;
+    }
+
+    .payment-option input {
+      margin-right: 8px;
+    }
+
+    .payment-icon {
+      font-size: 1.8rem;
+      margin-bottom: 6px;
+    }
+
+    .payment-description {
+      color: var(--muted);
+      font-size: .88rem;
+    }
+
+    .payment-extra {
+      display: none;
+    }
+
+    .payment-extra.show {
+      display: block;
+    }
+
+    .pix-box,
+    .boleto-box {
+      background: #f8f1e8;
+      border-radius: 18px;
+      padding: 20px;
+      margin-top: 20px;
+    }
+
+    .pix-code {
+      background: white;
+      border: 1px dashed rgba(59, 33, 23, .25);
+      border-radius: 12px;
+      padding: 14px;
+      word-break: break-all;
+      font-size: .85rem;
+    }
+
+    .installment-info {
+      background: #fff8ee;
+      border-radius: 12px;
+      padding: 12px 15px;
+      font-size: .88rem;
+      color: var(--coffee-800);
+    }
+
+    .order-summary-item {
+      display: flex;
+      justify-content: space-between;
+      gap: 15px;
+      padding: 9px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .order-summary-item:last-child {
+      border-bottom: none;
+    }
+
+    .cep-loading {
+      display: none;
+      color: var(--muted);
+      font-size: .85rem;
+    }
+
+    .cep-loading.show {
+      display: block;
+    }
+
+    .form-section-title {
+      color: var(--coffee-900);
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 18px;
+    }
+
+    .success-box {
+      display: none;
+      text-align: center;
+      padding: 40px 20px;
+    }
+
+    .success-box.show {
+      display: block;
+    }
+
+    .success-icon {
+      font-size: 4rem;
+      margin-bottom: 15px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="site-shell">
+
+    <div class="topbar">
+      <nav class="navbar navbar-expand-lg">
+        <div class="container-fluid px-4 px-xl-5">
+          <a class="navbar-brand d-flex align-items-center gap-2" href="../index.html">
+            <img src="../Imagens/EspumaEraLeiTopo.png" alt="A Espuma Era Lei" style="height:52px">
+          </a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menuPrincipal">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="menuPrincipal">
+            <ul class="navbar-nav ms-auto gap-lg-1 align-items-lg-center">
+              <li class="nav-item"><a class="nav-link" href="../index.html">Apresentação</a></li>
+              <li class="nav-item"><a class="nav-link" href="Cafeteiras.html">Cafeteiras</a></li>
+              <li class="nav-item"><a class="nav-link" href="Capsulas.html">Cápsulas</a></li>
+              <li class="nav-item"><a class="nav-link active" href="Pedidos.html">Pedidos</a></li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+    </div>
+
+    <main class="flex-grow-1">
+      <section class="pt-5 pb-4 fade-in-scroll">
+        <div class="container-fluid px-4 px-xl-5">
+          <div class="section-heading">
+            <div class="eyebrow">Finalização</div>
+            <h1
+              style="font-size: clamp(3rem, 6vw, 4.5rem); font-weight: 700; color: var(--coffee-950); line-height: 1;">
+              Dados do pedido</h1>
+            <p class="fs-5 text-secondary mt-3">Informe seus dados e escolha a forma de pagamento.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="pb-5">
+        <div class="container-fluid px-4 px-xl-5 fade-in-scroll">
+          <div id="checkoutContent">
+            <div class="payment-grid">
+
+              <!-- FORMULÁRIO -->
+              <section class="panel">
+                <form id="formPagamento">
+                  <div class="form-section-title">1. Identificação</div>
+                  <div class="row g-3">
+                    <div class="col-md-6"><label class="form-label" for="nome">Nome completo</label><input
+                        class="form-control" id="nome" name="nome" type="text" required></div>
+                    <div class="col-md-6"><label class="form-label" for="email">E-mail</label><input
+                        class="form-control" id="email" name="email" type="email" required></div>
+                    <div class="col-md-6"><label class="form-label" for="telefone">Telefone</label><input
+                        class="form-control" id="telefone" name="telefone" type="tel" placeholder="(21) 99999-9999"
+                        required></div>
+                  </div>
+
+                  <hr class="my-4">
+                  <div class="form-section-title">2. Endereço de entrega</div>
+                  <div class="row g-3">
+                    <div class="col-md-4"><label class="form-label" for="cep">CEP</label><input class="form-control"
+                        id="cep" name="cep" type="text" inputmode="numeric" maxlength="9" placeholder="00000-000"
+                        required>
+                      <div id="cepLoading" class="cep-loading mt-1">Consultando CEP...</div>
+                    </div>
+                    <div class="col-md-2"><label class="form-label" for="uf">UF</label><input class="form-control"
+                        id="uf" name="uf" type="text" maxlength="2" readonly required></div>
+                    <div class="col-md-6"><label class="form-label" for="cidade">Cidade</label><input
+                        class="form-control" id="cidade" name="cidade" type="text" readonly required></div>
+                    <div class="col-md-8"><label class="form-label" for="rua">Rua</label><input class="form-control"
+                        id="rua" name="rua" type="text" readonly required></div>
+                    <div class="col-md-4"><label class="form-label" for="numero">Número</label><input
+                        class="form-control" id="numero" name="numero" type="text" required></div>
+                    <div class="col-md-6"><label class="form-label" for="bairro">Bairro</label><input
+                        class="form-control" id="bairro" name="bairro" type="text" readonly required></div>
+                    <div class="col-md-6"><label class="form-label" for="complemento">Complemento <span
+                          class="text-secondary fw-normal">(opcional)</span></label><input class="form-control"
+                        id="complemento" name="complemento" type="text" placeholder="Apartamento, bloco, etc."></div>
+                  </div>
+
+                  <hr class="my-4">
+                  <div class="form-section-title">3. Forma de pagamento</div>
+                  <div class="row g-3">
+                    <div class="col-md-4"><label class="payment-option" id="optionPix"><input type="radio"
+                          name="formaPagamento" value="pix" required>
+                        <div class="payment-icon">💠</div><strong>PIX</strong>
+                        <div class="payment-description">Pagamento instantâneo</div>
+                      </label></div>
+                    <div class="col-md-4"><label class="payment-option" id="optionBoleto"><input type="radio"
+                          name="formaPagamento" value="boleto">
+                        <div class="payment-icon">🧾</div><strong>Boleto bancário</strong>
+                        <div class="payment-description">Pagamento por boleto</div>
+                      </label></div>
+                    <div class="col-md-4"><label class="payment-option" id="optionCartao"><input type="radio"
+                          name="formaPagamento" value="cartao">
+                        <div class="payment-icon">💳</div><strong>Cartão</strong>
+                        <div class="payment-description">Crédito ou débito</div>
+                      </label></div>
+                  </div>
+
+                  <!-- Extras Pagamento -->
+                  <div id="pixArea" class="payment-extra pix-box">
+                    <h5>Pagamento via PIX</h5>
+                    <p class="mb-2">Para esta atividade, será exibido um código PIX fictício para representar o fluxo de
+                      pagamento.</p>
+                    <div class="pix-code">00020126580014BR.GOV.BCB.PIX0136espumaeralei@example.com52040000530398654000
+                    </div>
+                  </div>
+                  <div id="boletoArea" class="payment-extra boleto-box">
+                    <h5>Boleto bancário</h5>
+                    <p class="mb-0">Ao finalizar, o sistema poderá gerar um boleto para representação do pagamento.</p>
+                  </div>
+                  <div id="cartaoArea" class="payment-extra mt-4">
+                    <div class="row g-3">
+                      <div class="col-md-6"><label class="form-label" for="tipoCartao">Tipo de cartão</label><select
+                          id="tipoCartao" name="tipoCartao" class="form-select">
+                          <option value="">Selecione</option>
+                          <option value="credito">Crédito</option>
+                          <option value="debito">Débito</option>
+                        </select></div>
+                      <div class="col-md-6"><label class="form-label" for="bandeira">Bandeira</label><select
+                          id="bandeira" name="bandeira" class="form-select">
+                          <option value="">Selecione</option>
+                          <option value="visa">Visa</option>
+                          <option value="mastercard">Mastercard</option>
+                          <option value="elo">Elo</option>
+                          <option value="hipercard">Hipercard</option>
+                        </select></div>
+                      <div class="col-md-8"><label class="form-label" for="numeroCartao">Número do cartão</label><input
+                          class="form-control" id="numeroCartao" name="numeroCartao" type="text" inputmode="numeric"
+                          maxlength="19" placeholder="0000 0000 0000 0000"></div>
+                      <div class="col-md-4"><label class="form-label" for="cvv">Código CVV</label><input
+                          class="form-control" id="cvv" name="cvv" type="password" inputmode="numeric" maxlength="4"
+                          placeholder="123"></div>
+                      <div class="col-md-6"><label class="form-label" for="validade">Validade</label><input
+                          class="form-control" id="validade" name="validade" type="month"></div>
+                      <div class="col-md-6" id="parcelamentoContainer"><label class="form-label"
+                          for="parcelas">Parcelamento</label><select class="form-select" id="parcelas"
+                          name="parcelas"></select></div>
+                    </div>
+                    <div id="parcelamentoInfo" class="installment-info mt-3"></div>
+                  </div>
+
+                  <button type="submit" class="btn btn-coffee w-100 mt-4 py-3 fs-5">Finalizar pedido</button>
+                </form>
+
+                <!-- Sucesso -->
+                <div id="successBox" class="success-box">
+                  <div class="success-icon">☕</div>
+                  <h2 style="font-size: 2.5rem; color: var(--coffee-950);">Pedido realizado!</h2>
+                  <p class="text-secondary fs-5 mt-3">Obrigado por comprar na A Espuma Era Lei.</p>
+                  <p id="successDetails" class="fw-bold text-coffee-950 mt-4"></p>
+                  <a href="../index.html" class="btn btn-coffee mt-3 px-4 py-2">Voltar para o início</a>
+                </div>
+              </section>
+
+              <!-- RESUMO -->
+              <aside class="panel">
+                <h2>Resumo do pedido</h2>
+                <div id="resumoPedido" class="mb-3"></div>
+                <div class="total-box mt-4">
+                  <span>Total</span>
+                  <strong id="resumoTotal" style="font-size: 1.8rem;">R$ 0,00</strong>
+                </div>
+              </aside>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer mt-auto pt-5 pb-3 fade-in-scroll">
+      <div class="container-fluid px-4 px-xl-5">
+        <div class="row gy-4 mb-5">
+          <div class="col-lg-4 col-md-6 pe-lg-4">
+            <div class="d-flex align-items-center gap-2 mb-3">
+              <span class="fs-3">☕</span>
+              <h5 class="text-white mb-0 fw-bold font-ubuntu">A Espuma Era Lei</h5>
+            </div>
+            <p class="text-white-50">Nascemos da paixão por extrair o melhor de cada grão. Transformamos a sua pausa
+              para o café num verdadeiro ritual de sabor e conforto, entregando as melhores máquinas e cápsulas na sua
+              porta.</p>
+          </div>
+          <div class="col-lg-2 col-md-6">
+            <h5 class="text-white mb-4 font-ubuntu">Navegue</h5>
+            <ul class="list-unstyled footer-links">
+              <li><a href="../index.html">Início</a></li>
+              <li><a href="Cafeteiras.html">Cafeteiras</a></li>
+              <li><a href="Capsulas.html">Cápsulas</a></li>
+              <li><a href="Pedidos.html">Meus Pedidos</a></li>
+            </ul>
+          </div>
+          <div class="col-lg-3 col-md-6">
+            <h5 class="text-white mb-4 font-ubuntu">Fale Conosco</h5>
+            <ul class="list-unstyled text-white-50 contact-list">
+              <li class="mb-3 d-flex align-items-start gap-2"><span>📍</span> <span>Rua do Café, 123 - Centro<br>Rio de
+                  Janeiro, RJ</span></li>
+              <li class="mb-3 d-flex align-items-center gap-2"><span>📞</span> <span>(21) 91122-3344</span></li>
+              <li class="d-flex align-items-center gap-2"><span>✉️</span> <span>contato@espumaeralei.com.br</span></li>
+            </ul>
+          </div>
+          <div class="col-lg-3 col-md-6">
+            <h5 class="text-white mb-4 font-ubuntu">Atendimento</h5>
+            <p class="text-white-50 mb-4">Seg a Sex: 08h às 18h<br>Sábados: 09h às 13h</p>
+            <div class="d-flex gap-3 social-badges">
+              <a href="#">📸</a><a href="#">👍</a><a href="#">💬</a>
+            </div>
+          </div>
+        </div>
+        <div
+          class="border-top border-secondary pt-4 text-center d-flex flex-column flex-md-row justify-content-between align-items-center">
+          <small class="text-white-50 mb-2 mb-md-0">&copy; 2026 A Espuma Era Lei.</small>
+          <small class="text-white-50">Desenvolvido com dedicação e muito café.</small>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="../js/common.js"></script>
+  <script>
+    // Script intacto - mantive toda a lógica do formulário e carrinho
+    const cart = getCart();
+    if (!cart.length) {
+      document.getElementById('checkoutContent').innerHTML = `<div class="panel text-center py-5"><h2>Seu carrinho está vazio</h2><p class="text-secondary">Adicione algum produto antes de continuar.</p><a href="Pedidos.html" class="btn btn-coffee mt-3">Voltar aos produtos</a></div>`;
+    }
+    function calcularTotal() { return cart.reduce((total, item) => total + item.price * item.quantity, 0); }
+    const total = calcularTotal();
+    function renderResumo() { const container = document.getElementById('resumoPedido'); if (!container) return; container.innerHTML = cart.map(item => `<div class="order-summary-item"><div><strong>${item.name}</strong><br><small class="text-secondary">${item.quantity} × ${moeda(item.price)}</small></div><strong>${moeda(item.price * item.quantity)}</strong></div>`).join(''); document.getElementById('resumoTotal').textContent = moeda(total); }
+    renderResumo();
+
+    const telefone = document.getElementById('telefone'); telefone.addEventListener('input', function () { let value = this.value.replace(/\D/g, ''); if (value.length > 11) { value = value.substring(0, 11); } if (value.length <= 10) { value = value.replace(/^(\d{2})(\d)/, '($1) $2'); value = value.replace(/(\d{4})(\d)/, '$1-$2'); } else { value = value.replace(/^(\d{2})(\d)/, '($1) $2'); value = value.replace(/(\d{5})(\d)/, '$1-$2'); } this.value = value; });
+    const cep = document.getElementById('cep'); const cepLoading = document.getElementById('cepLoading'); cep.addEventListener('input', function () { let value = this.value.replace(/\D/g, ''); if (value.length > 8) value = value.substring(0, 8); if (value.length > 5) this.value = value.substring(0, 5) + '-' + value.substring(5); else this.value = value; if (value.length === 8) consultarCEP(value); });
+    async function consultarCEP(valor) { cepLoading.classList.add('show'); try { const resposta = await fetch(`https://viacep.com.br/ws/${valor}/json/`); if (!resposta.ok) throw new Error('Erro na consulta'); const dados = await resposta.json(); if (dados.erro) { alert('CEP não encontrado.'); limparEndereco(); return; } document.getElementById('rua').value = dados.logradouro || ''; document.getElementById('bairro').value = dados.bairro || ''; document.getElementById('cidade').value = dados.localidade || ''; document.getElementById('uf').value = dados.uf || ''; document.getElementById('numero').focus(); } catch (erro) { alert('Não foi possível consultar o CEP. Você pode preencher o endereço manualmente.'); } finally { cepLoading.classList.remove('show'); } }
+    function limparEndereco() { document.getElementById('rua').value = ''; document.getElementById('bairro').value = ''; document.getElementById('cidade').value = ''; document.getElementById('uf').value = ''; }
+
+    const formasPagamento = document.querySelectorAll('input[name="formaPagamento"]'); const optionPix = document.getElementById('optionPix'); const optionBoleto = document.getElementById('optionBoleto'); const optionCartao = document.getElementById('optionCartao'); const pixArea = document.getElementById('pixArea'); const boletoArea = document.getElementById('boletoArea'); const cartaoArea = document.getElementById('cartaoArea'); formasPagamento.forEach(radio => { radio.addEventListener('change', atualizarPagamento); });
+    function atualizarPagamento() { const selecionado = document.querySelector('input[name="formaPagamento"]:checked');[optionPix, optionBoleto, optionCartao].forEach(el => el.classList.remove('active')); pixArea.classList.remove('show'); boletoArea.classList.remove('show'); cartaoArea.classList.remove('show'); if (!selecionado) return; if (selecionado.value === 'pix') { optionPix.classList.add('active'); pixArea.classList.add('show'); desativarCamposCartao(); } if (selecionado.value === 'boleto') { optionBoleto.classList.add('active'); boletoArea.classList.add('show'); desativarCamposCartao(); } if (selecionado.value === 'cartao') { optionCartao.classList.add('active'); cartaoArea.classList.add('show'); ativarCamposCartao(); atualizarParcelamento(); } }
+
+    const tipoCartao = document.getElementById('tipoCartao'); const bandeira = document.getElementById('bandeira'); const numeroCartao = document.getElementById('numeroCartao'); const cvv = document.getElementById('cvv'); const validade = document.getElementById('validade'); const parcelas = document.getElementById('parcelas'); const parcelamentoInfo = document.getElementById('parcelamentoInfo');
+    function ativarCamposCartao() { tipoCartao.required = true; bandeira.required = true; numeroCartao.required = true; validade.required = true; } function desativarCamposCartao() { tipoCartao.required = false; bandeira.required = false; numeroCartao.required = false; validade.required = false; cvv.required = false; tipoCartao.value = ''; bandeira.value = ''; numeroCartao.value = ''; cvv.value = ''; validade.value = ''; parcelas.innerHTML = ''; parcelamentoInfo.textContent = ''; }
+    tipoCartao.addEventListener('change', atualizarTipoCartao); function atualizarTipoCartao() { if (tipoCartao.value === 'credito') { cvv.required = true; cvv.parentElement.style.display = 'block'; document.getElementById('parcelamentoContainer').style.display = 'block'; atualizarParcelamento(); } else { cvv.required = false; cvv.value = ''; cvv.parentElement.style.display = 'block'; document.getElementById('parcelamentoContainer').style.display = 'none'; parcelas.innerHTML = ''; parcelamentoInfo.textContent = 'No cartão de débito, o valor é cobrado integralmente.'; } }
+    numeroCartao.addEventListener('input', function () { let value = this.value.replace(/\D/g, ''); value = value.substring(0, 16); const grupos = []; for (let i = 0; i < value.length; i += 4) { grupos.push(value.substring(i, i + 4)); } this.value = grupos.join(' '); }); cvv.addEventListener('input', function () { this.value = this.value.replace(/\D/g, '').substring(0, 4); });
+    function limiteParcelas(valor) { if (valor >= 400) return 10; if (valor >= 300) return 9; if (valor >= 200) return 6; if (valor > 100) return 3; return 1; }
+    function atualizarParcelamento() { if (tipoCartao.value !== 'credito') return; const limite = limiteParcelas(total); parcelas.innerHTML = ''; for (let i = 1; i <= limite; i++) { const valorParcela = total / i; const option = document.createElement('option'); option.value = i; option.textContent = `${i}x de ${moeda(valorParcela)}`; parcelas.appendChild(option); } if (limite === 1) { parcelamentoInfo.textContent = 'Para compras de até R$ 100,00, o pagamento fica disponível somente à vista.'; } else { parcelamentoInfo.textContent = `Esta compra pode ser parcelada em até ${limite}x sem juros.`; } }
+
+    document.getElementById('formPagamento').addEventListener('submit', function (event) { event.preventDefault(); const forma = document.querySelector('input[name="formaPagamento"]:checked'); if (!forma) { alert('Selecione uma forma de pagamento.'); return; } if (forma.value === 'cartao' && tipoCartao.value === 'credito' && cvv.value.length < 3) { alert('Informe o código de segurança do cartão de crédito.'); cvv.focus(); return; } let descricaoPagamento = ''; if (forma.value === 'pix') descricaoPagamento = 'Pagamento via PIX'; if (forma.value === 'boleto') descricaoPagamento = 'Boleto bancário'; if (forma.value === 'cartao') descricaoPagamento = tipoCartao.value === 'credito' ? `Cartão de crédito — ${parcelas.value}x` : 'Cartão de débito'; localStorage.setItem('ultimoPedido', JSON.stringify({ total: total, pagamento: descricaoPagamento, data: new Date().toLocaleString('pt-BR') })); clearCart(); document.getElementById('formPagamento').style.display = 'none'; document.getElementById('successBox').classList.add('show'); document.getElementById('successDetails').textContent = `${descricaoPagamento} · Total de ${moeda(total)}`; });
+
+    // Animação Scroll
+    document.addEventListener("DOMContentLoaded", function () {
+      const observer = new IntersectionObserver((entries, observer) => { entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('is-visible'); observer.unobserve(entry.target); } }); }, { threshold: 0.05, rootMargin: "0px 0px -50px 0px" });
+      document.querySelectorAll('.fade-in-scroll').forEach(el => observer.observe(el));
+    });
+  </script>
+</body>
+
+</html>

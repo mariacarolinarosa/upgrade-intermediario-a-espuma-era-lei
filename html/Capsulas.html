@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Cápsulas | A Espuma Era Lei</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="../css/style.css" rel="stylesheet">
+</head>
+<body>
+  <div class="site-shell">
+    
+    <div class="topbar">
+      <nav class="navbar navbar-expand-lg">
+        <div class="container-fluid px-4 px-xl-5">
+          <a class="navbar-brand d-flex align-items-center gap-2" href="../index.html">
+            <img src="../Imagens/EspumaEraLeiTopo.png" alt="A Espuma Era Lei" style="height:52px">
+          </a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menuPrincipal">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="menuPrincipal">
+            <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-1">
+              <li class="nav-item"><a class="nav-link" href="../index.html">Apresentação</a></li>
+              <li class="nav-item"><a class="nav-link" href="Cafeteiras.html">Cafeteiras</a></li>
+              <li class="nav-item"><a class="nav-link active" href="Capsulas.html">Cápsulas</a></li>
+              <li class="nav-item"><a class="nav-link" href="Pedidos.html">Pedidos</a></li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+    </div>
+
+    <main class="flex-grow-1">
+      <section class="pt-5 pb-4 fade-in-scroll">
+        <div class="container-fluid px-4 px-xl-5">
+          <div class="section-heading">
+            <div class="eyebrow">Sabores e intensidades</div>
+            <h1 style="font-size: clamp(3rem, 6vw, 4.5rem); font-weight: 700; color: var(--coffee-950); line-height: 1;">Cápsulas</h1>
+            <p class="fs-5 text-secondary mt-3 max-w-700">Clique em uma cápsula para visualizar os detalhes, configurar a quantidade e adicionar ao pedido.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Layout com Grid de Produtos à Esquerda e Painel de Detalhes à Direita -->
+      <section class="pb-5">
+        <div class="container-fluid px-4 px-xl-5 fade-in-scroll">
+          <div class="row g-4">
+            
+            <!-- Grid de Cápsulas -->
+            <div class="col-lg-7">
+              <div class="row g-3" id="capsulasGrid"></div>
+            </div>
+
+            <!-- Painel Lateral (Box Fixo) -->
+            <div class="col-lg-5">
+              <aside class="detail-panel">
+                <div id="detailEmpty" class="detail-empty">
+                  Selecione uma cápsula<br>para ver os detalhes.
+                </div>
+                
+                <div id="detailContent" class="d-none text-center">
+                  <span class="badge badge-soft rounded-pill mb-2" id="detailMaquina"></span>
+                  <h2 class="h3 mt-1 mb-3" id="detailNome"></h2>
+                  
+                  <!-- Container restrito para a imagem não vazar da div -->
+                  <div class="my-3 d-flex align-items-center justify-content-center" style="height: 200px;">
+                    <img id="detailImg" src="../Imagens/vazio.jpg" alt="" style="max-height: 190px; max-width: 100%; object-fit: contain;">
+                  </div>
+
+                  <p class="text-secondary small mb-1" id="detailQtdEmbalagem"></p>
+                  <div class="price mb-3" id="detailPrecoUnitario"></div>
+
+                  <!-- Seletor de Quantidade -->
+                  <div class="mb-3 d-flex justify-content-center align-items-center gap-3 bg-light p-2 rounded-3 border">
+                    <label for="detailQtd" class="form-label mb-0 fw-bold fs-6">Quantidade:</label>
+                    <input type="number" id="detailQtd" class="form-control text-center bg-white" style="width: 80px;" min="1" max="30" value="1" oninput="atualizarSubtotalDetail()">
+                  </div>
+                  
+                  <div class="text-secondary mb-4 small">
+                    Subtotal: <strong id="detailSubtotal" class="text-coffee-950 fs-5">R$ 0,00</strong>
+                  </div>
+
+                  <!-- Botões de Ação Unificados -->
+                  <div class="d-flex flex-column gap-2">
+                    <button type="button" class="btn btn-coffee w-100 py-2" onclick="adicionarDetalheEContinuar()">Adicionar ao pedido</button>
+                    <button type="button" class="btn btn-outline-coffee w-100 py-2" onclick="adicionarDetalheEIrParaFechamento()">Adicionar e ir para pagamento</button>
+                  </div>
+                </div>
+              </aside>
+            </div>
+
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Rodapé -->
+    <footer class="site-footer mt-auto pt-5 pb-3 fade-in-scroll">
+      <div class="container-fluid px-4 px-xl-5">
+        <div class="row gy-4 mb-5">
+          <div class="col-lg-4 col-md-6 pe-lg-4">
+            <div class="d-flex align-items-center gap-2 mb-3">
+               <span class="fs-3">☕</span>
+               <h5 class="text-white mb-0 fw-bold font-ubuntu">A Espuma Era Lei</h5>
+            </div>
+            <p class="text-white-50">Nascemos da paixão por extrair o melhor de cada grão. Transformamos a sua pausa para o café num verdadeiro ritual de sabor e conforto, entregando as melhores máquinas e cápsulas na sua porta.</p>
+          </div>
+          <div class="col-lg-2 col-md-6">
+            <h5 class="text-white mb-4 font-ubuntu">Navegue</h5>
+            <ul class="list-unstyled footer-links">
+              <li><a href="../index.html">Início</a></li>
+              <li><a href="Cafeteiras.html">Cafeteiras</a></li>
+              <li><a href="Capsulas.html">Cápsulas</a></li>
+              <li><a href="Pedidos.html">Meus Pedidos</a></li>
+            </ul>
+          </div>
+          <div class="col-lg-3 col-md-6">
+            <h5 class="text-white mb-4 font-ubuntu">Fale Conosco</h5>
+            <ul class="list-unstyled text-white-50 contact-list">
+              <li class="mb-3 d-flex align-items-start gap-2"><span>📍</span> <span>Rua do Café, 123 - Centro<br>Rio de Janeiro, RJ</span></li>
+              <li class="mb-3 d-flex align-items-center gap-2"><span>📞</span> <span>(21) 91122-3344</span></li>
+              <li class="d-flex align-items-center gap-2"><span>✉️</span> <span>contato@espumaeralei.com.br</span></li>
+            </ul>
+          </div>
+          <div class="col-lg-3 col-md-6">
+            <h5 class="text-white mb-4 font-ubuntu">Atendimento</h5>
+            <p class="text-white-50 mb-4">Seg a Sex: 08h às 18h<br>Sábados: 09h às 13h</p>
+            <div class="d-flex gap-3 social-badges">
+              <a href="#">📸</a><a href="#">👍</a><a href="#">💬</a>
+            </div>
+          </div>
+        </div>
+        <div class="border-top border-secondary pt-4 text-center d-flex flex-column flex-md-row justify-content-between align-items-center">
+          <small class="text-white-50 mb-2 mb-md-0">&copy; 2026 A Espuma Era Lei.</small>
+          <small class="text-white-50">Desenvolvido com dedicação e muito café.</small>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="../js/common.js"></script>
+  <script>
+    const capsulas = [
+      { id: 'espresso', nome: 'Espresso', maquina: 'Dolce Gusto', imagem: 'CapDolceGusto_10_Espresso.jpg', qtd: 10, preco: 18 },
+      { id: 'intenso', nome: 'Intenso', maquina: 'Dolce Gusto', imagem: 'CapDolceGusto_10_Intenso.jpg', qtd: 10, preco: 44 },
+      { id: 'forza', nome: 'Forza/Vibrante', maquina: 'Três Corações', imagem: 'CapTresCoracoes_30_ForzaVibrante.jpg', qtd: 30, preco: 19 },
+      { id: 'tres-intenso', nome: 'Três Cor. Intenso', maquina: 'Nespresso', imagem: 'CapTresCoracoesNespreso_10_Intenso.jpg', qtd: 10, preco: 21 },
+      { id: 'lor-forza', nome: 'LOR Forza', maquina: 'Nespresso', imagem: 'CapLorNespreso_10_Forza.jpg', qtd: 10, preco: 20 }
+    ];
+
+    let capsulaAtivaIndex = null;
+    const grid = document.getElementById('capsulasGrid');
+    
+    grid.innerHTML = capsulas.map((p, i) => `
+      <div class="col-sm-6">
+        <button class="card-modern feature-block w-100 text-start border-0" onclick="exibirCapsula(${i})">
+          <div class="card-media" style="min-height:160px">
+            <img src="../Imagens/${p.imagem}" alt="${p.nome}" style="max-height: 140px; max-width: 100%; object-fit: contain;">
+          </div>
+          <div class="card-body-modern">
+            <span class="badge badge-soft rounded-pill mb-2">${p.maquina}</span>
+            <h2 class="h6 mb-1">${p.nome}</h2>
+            <div class="d-flex justify-content-between align-items-center">
+              <span class="text-secondary small">${p.qtd} cápsulas</span>
+              <span class="price fs-6">${moeda(p.preco)}</span>
+            </div>
+          </div>
+        </button>
+      </div>`).join('');
+
+    function exibirCapsula(i) {
+      capsulaAtivaIndex = i;
+      const p = capsulas[i];
+      document.getElementById('detailEmpty').classList.add('d-none');
+      document.getElementById('detailContent').classList.remove('d-none');
+      document.getElementById('detailMaquina').textContent = p.maquina;
+      document.getElementById('detailNome').textContent = p.nome;
+      document.getElementById('detailImg').src = `../Imagens/${p.imagem}`;
+      document.getElementById('detailImg').alt = p.nome;
+      document.getElementById('detailQtdEmbalagem').textContent = `Embalagem com ${p.qtd} cápsulas`;
+      document.getElementById('detailPrecoUnitario').textContent = moeda(p.preco);
+      document.getElementById('detailQtd').value = 1;
+      atualizarSubtotalDetail();
+    }
+
+    function atualizarSubtotalDetail() {
+      if (capsulaAtivaIndex === null) return;
+      const p = capsulas[capsulaAtivaIndex];
+      const qtd = Math.max(1, Number(document.getElementById('detailQtd').value) || 1);
+      document.getElementById('detailSubtotal').textContent = moeda(p.preco * qtd);
+    }
+
+    function salvarCapsulaCarrinho() {
+      if (capsulaAtivaIndex === null) return;
+      const p = capsulas[capsulaAtivaIndex];
+      const qtd = Math.max(1, Number(document.getElementById('detailQtd').value) || 1);
+      addToCart({
+        id: p.id,
+        name: p.nome,
+        price: p.preco,
+        typeLabel: `Cápsula · ${p.maquina}`
+      }, qtd);
+    }
+
+    function adicionarDetalheEContinuar() {
+      salvarCapsulaCarrinho();
+      alert('Produto adicionado ao carrinho com sucesso!');
+    }
+
+    function adicionarDetalheEIrParaFechamento() {
+      salvarCapsulaCarrinho();
+      window.location.href = 'DadosPagamento.html';
+    }
+
+    // Animação Scroll Bidirecional
+    document.addEventListener("DOMContentLoaded", function() {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+          } else {
+            entry.target.classList.remove('is-visible');
+          }
+        });
+      }, { threshold: 0.1, rootMargin: "0px 0px -30px 0px" });
+      document.querySelectorAll('.fade-in-scroll').forEach(el => observer.observe(el));
+    });
+  </script>
+</body>
+</html>
