@@ -20,18 +20,24 @@
 }
 
 html {
-  scroll-behavior: smooth;
-  overflow-x: hidden;
+    scroll-behavior: smooth;
 }
 
 body {
-  margin: 0;
-  min-height: 100vh;
-  background: radial-gradient(circle at top right, rgba(201, 137, 74, .12), transparent 30%), var(--cream-100);
-  color: var(--text);
-  font-family: Karla, system-ui, sans-serif;
-  font-size: 17px; /* Aumentado ligeiramente para acompanhar o zoom geral */
-  overflow-x: hidden;
+    margin: 0;
+    min-height: 100vh;
+    background:
+        radial-gradient(
+            circle at top right,
+            rgba(201, 137, 74, .12),
+            transparent 30%
+        ),
+        var(--cream-100);
+    color: var(--text);
+    font-family: Karla, system-ui, sans-serif;
+    font-size: 17px;
+
+    overflow-x: clip;
 }
 
 h1, h2, h3, h4, .font-ubuntu, .navbar-brand {
@@ -124,8 +130,17 @@ a:hover { color: var(--accent-dark); }
   transform: translateY(0); 
 }
 
-.feature-block { transition: transform 0.3s ease, background 0.3s ease; border-radius: 0; padding: 30px 20px; }
-.feature-block:hover { transform: scale(1.02); background: rgba(255, 253, 249, 0.6); box-shadow: 0 20px 40px rgba(49, 28, 18, 0.04); }
+.feature-block {
+    transition: transform .3s ease, background .3s ease;
+    border-radius: 0;
+    padding: 30px 20px;
+}
+
+.feature-block:hover {
+    transform: translateY(-4px);
+    background: rgba(255, 253, 249, 0.6);
+    box-shadow: 0 20px 40px rgba(49, 28, 18, 0.04);
+}
 
 .feature-icon-wrapper { background: #f1e7db; width: 160px; height: 160px; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 15px 35px rgba(49, 28, 18, 0.08); position: relative; transition: transform 0.4s ease; }
 .feature-block:hover .feature-icon-wrapper { transform: translateY(-10px); }
@@ -216,19 +231,12 @@ a:hover { color: var(--accent-dark); }
 }
 
 .img-organica {
-    width: 900px;
-    height: 900px;
-    max-width: 100%;
-
-    /* A imagem preenche completamente a forma */
+    width: min(100%, 700px);
+    height: auto;
+    aspect-ratio: 1 / 1;
     object-fit: cover;
-
-    /* Forma orgânica */
     border-radius: 58% 42% 63% 37% / 45% 58% 42% 55%;
-
-    /* Corta a imagem dentro da forma */
-    overflow: hidden;
-
-    /* Sombra */
     box-shadow: 0 20px 45px rgba(49, 28, 18, 0.15);
+    display: block;
+    margin: 0 auto;
 }
